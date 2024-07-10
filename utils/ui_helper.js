@@ -4,8 +4,7 @@ const createContainer = (children = [], containerClasses = []) => {
   if (containerClasses.length > 0) {
     div.classList.add(...containerClasses);
   }
-
-  console.log(children);
+  
   div.append(...children);
 
   return div;

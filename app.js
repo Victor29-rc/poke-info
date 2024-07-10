@@ -1385,3 +1385,5 @@ const showPokemonSectionElement = document.querySelector(
 );
 
 showPokemonSectionElement.append(PokemonUI.createPokemonPreview(pokemonToShow));
+showPokemonSectionElement.append(PokemonUI.createPokemonDescription({name: 'Pokemon name', description: 'Pokemon description example'}));
+showPokemonSectionElement.append(PokemonUI.createPokemonStats(pokemonToShow));
