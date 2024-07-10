@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Poke Info</title>
+    <script
+      src="https://kit.fontawesome.com/04fc921eac.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="style.css" />
+    <script src="utils/ui_helper.js" defer></script>
+    <script src="utils/str_helper.js" defer></script>
+    <script src="classes/UI/PokemonUI.js" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <div class="poke-header">
+        <h1>Poke info</h1>
+        <i class="fa-solid fa-bars display-menu-btn"></i>
+        <nav>
+          <ul class="pokemon-types"></ul>
+        </nav>
+      </div>
+    </header>
+    <main>
+      <section class="section-pokemons" hidden>
+        <div class="search-sub-section">
+          <div class="search-container">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input
+              type="text"
+              class="input-text"
+              name="search"
+              id="search"
+              placeholder="search"
+            />
+          </div>
+        </div>
+        <div class="pokemons-sub-section"></div>
+      </section>
+      <section class="section-pokemon-preview"></section>
+    </main>
+  </body>
+</html>
