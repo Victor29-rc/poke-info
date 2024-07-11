@@ -2,7 +2,7 @@ body {
   margin: 0;
 }
 
-/*HEADER STYLES*/
+/* HEADER STYLES */
 
 header,
 main {
@@ -51,7 +51,7 @@ main {
   padding-top: 1rem;
 }
 
-/* POKEMONS LIST SECTION*/
+/* POKEMONS LIST SECTION */
 
 section.section-pokemons {
   padding-bottom: 1rem;
@@ -115,6 +115,118 @@ section.section-pokemons
   margin-right: auto;
 }
 
+/* SHOW POKEMON SECTION */
+
+section.section-pokemon-preview div.row-pokemon {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-gap: 2rem;
+}
+
+
+.pokemon-preview-container,
+.pokemon-stats-container {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.pokemon-preview-container {
+  align-items: flex-end;
+}
+
+.pokemon-stats-container {
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.pokemon-preview.show-info-container,
+.pokemon-description {
+  padding: 1rem;
+  margin-bottom: 1rem;
+  width: 50%;
+  width: -webkit-fill-available;
+  text-align: center;
+}
+
+.pokemon-description {
+  margin-bottom: 0px;
+}
+
+.pokemon-preview.show-info-container img {
+  width: 200px;
+  height: 200px;
+}
+
+.pokemon-tags-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: -webkit-fill-available;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.pokemon-tags-row ul,
+.abilities-container {
+  padding: 0;
+  list-style: none;
+}
+
+.pokemon-tags-row ul li, 
+.pokemon-tags-row span {
+  padding: 0;
+  border: 1px solid;
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: inline-block;
+  margin-left: 1rem;
+}
+
+.pokemon-tags-row ul li:first-of-type {
+  margin-left: 0;
+}
+
+.pokemon-tags-row ul li, 
+.pokemon-tags-row span {
+  padding: 0;
+  border: 1px solid;
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.pokemon-attributes-container {
+  width: -webkit-fill-available;
+  padding: 0 1rem 1rem;
+}
+
+.pokemon-attributes-container div h1, 
+.pokemon-attributes-container div span {
+  display: inline-block;
+}
+
+.pokemon-attributes-container div h1 {
+  margin: 1rem 0;
+  font-size: 18px;
+}
+
+.abilities-container {
+  margin: 0;
+  display: inline-block;
+}
+
+.abilities-container .ability-item,
+.pokemon-attributes-container div span {
+  padding: 4px 8px;
+  text-align: center;
+  border-radius: 4px;
+  box-shadow: 0px 0px 3px 0px;
+  display: inline-block;
+  margin-left: 1rem;
+}
+
+
 /* GLOBAL STYLES */
 
 .input-text {
@@ -127,6 +239,11 @@ section.section-pokemons
 .input-text:focus-visible {
   outline: 0;
 }
+
+.box-shadow {
+  border-radius: 4px;
+  box-shadow: 0px 0px 5px 1px;
+} 
 
 /* RESPONSIVE */
 

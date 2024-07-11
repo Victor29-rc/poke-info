@@ -1384,6 +1384,19 @@ const showPokemonSectionElement = document.querySelector(
   'section.section-pokemon-preview'
 );
 
-showPokemonSectionElement.append(PokemonUI.createPokemonPreview(pokemonToShow));
-showPokemonSectionElement.append(PokemonUI.createPokemonDescription({name: 'Pokemon name', description: 'Pokemon description example'}));
-showPokemonSectionElement.append(PokemonUI.createPokemonStats(pokemonToShow));
+
+const columnPokemonPreview = createContainer(
+  [
+    PokemonUI.createPokemonPreview(pokemonToShow), 
+    PokemonUI.createPokemonDescription({name: 'Pokemon name', description: 'Pokemon description example'})
+  ],
+  ['pokemon-preview-container']
+)
+
+const columnPokemonStats = PokemonUI.createPokemonStats(pokemonToShow);
+
+const rowShowPokemon = createContainer([columnPokemonPreview, columnPokemonStats], ['row-pokemon']);
+const rowPokemonEvolutions = document.createElement('div')
+rowPokemonEvolutions.classList.add('row-pokemon-evolution');
+
+showPokemonSectionElement.append(rowShowPokemon, rowPokemonEvolutions);

@@ -33,7 +33,7 @@ class PokemonUI {
     const img = document.createElement('img');
     img.src = pokemon.sprites.front_default;
 
-    return createContainer([img], ['pokemon-preview', 'show-info-container']);
+    return createContainer([img], ['pokemon-preview', 'show-info-container', 'box-shadow']);
   }
 
 
@@ -44,7 +44,7 @@ class PokemonUI {
     const p = document.createElement('p');
     p.textContent = pokemon.description;
 
-    return createContainer([h1, p], ['pokemon-description']);
+    return createContainer([h1, p], ['pokemon-description', 'box-shadow']);
   }
 
   static createPokemonStats(pokemon) {
@@ -106,9 +106,9 @@ class PokemonUI {
     // ----------
 
     const tags = createContainer([ul, span], ['pokemon-tags-row']);
-    const attributes = createContainer([heightLineElement, weightLineElement, abilitiesLineElement], ['attributes-container']);
+    const attributes = createContainer([heightLineElement, weightLineElement, abilitiesLineElement], ['pokemon-attributes-container']);
 
-    return createContainer([tags, attributes], ['pokemon-stats-container']);
+    return createContainer([tags, attributes], ['pokemon-stats-container', 'box-shadow']);
   }
 
   static #createPokeTypeTag({ type }) {
