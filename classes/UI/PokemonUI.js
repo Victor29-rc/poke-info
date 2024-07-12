@@ -29,15 +29,39 @@ class PokemonUI {
     return createContainer([img, h1, ul], ['poke-card-container']);
   }
 
-  static createPokemonPreview(pokemon) {
+  static showPokemon(pokemon) {
+    const columnPokemonPreview = createContainer(
+      [
+        this.#createPokemonPreview(pokemon),
+        this.#createPokemonDescription({
+          name: 'Pokemon name',
+          description: 'Pokemon description example',
+        }),
+      ],
+      ['pokemon-preview-container']
+    );
+
+    const columnPokemonStats = this.createPokemonStats(pokemon);
+
+    const rowShowPokemon = createContainer(
+      [columnPokemonPreview, columnPokemonStats],
+      ['row-pokemon']
+    );
+
+    return rowShowPokemon;
+  }
+
+  static #createPokemonPreview(pokemon) {
     const img = document.createElement('img');
     img.src = pokemon.sprites.front_default;
 
-    return createContainer([img], ['pokemon-preview', 'show-info-container', 'box-shadow']);
+    return createContainer(
+      [img],
+      ['pokemon-preview', 'show-info-container', 'box-shadow']
+    );
   }
 
-
-  static createPokemonDescription(pokemon) {
+  static #createPokemonDescription(pokemon) {
     const h1 = document.createElement('h1');
     h1.textContent = pokemon.name;
 
@@ -51,14 +75,14 @@ class PokemonUI {
     const ul = document.createElement('ul');
     const pokemonTags = [];
 
-    pokemon.types.forEach(type => {
-      pokemonTags.push(this.#createPokeTypeTag(type))
+    pokemon.types.forEach((type) => {
+      pokemonTags.push(this.#createPokeTypeTag(type));
     });
 
     ul.append(...pokemonTags);
 
     const span = document.createElement('span');
-    span.classList.add('tag-experience')
+    span.classList.add('tag-experience');
     span.textContent = `${pokemon.base_experience} EXP`;
 
     //pokemon details such as the weight, heights and abilities
@@ -68,7 +92,7 @@ class PokemonUI {
 
     const spanHeight = document.createElement('span');
     spanHeight.textContent = pokemon.height;
-  
+
     const heightLineElement = createContainer([h1Height, spanHeight]);
 
     // ----------
@@ -78,14 +102,14 @@ class PokemonUI {
 
     const spanWeight = document.createElement('span');
     spanWeight.textContent = pokemon.weight;
-  
-    const weightLineElement = createContainer([h1Weight, spanWeight])
+
+    const weightLineElement = createContainer([h1Weight, spanWeight]);
 
     // ----------
 
     const h1Abilities = document.createElement('h1');
     h1Abilities.textContent = 'Abilities';
-    
+
     const ulAbilitiesContainer = document.createElement('ul');
     ulAbilitiesContainer.classList.add('abilities-container');
 
@@ -94,21 +118,69 @@ class PokemonUI {
     pokemon.abilities.forEach((abilityObj) => {
       const abilityLi = document.createElement('li');
       abilityLi.classList.add('ability-item');
-      abilityLi.textContent = abilityObj.ability.name;
+      abilityLi.textContent = ucfirst(abilityObj.ability.name);
 
       abilitiesItems.push(abilityLi);
-    })
+    });
 
     ulAbilitiesContainer.append(...abilitiesItems);
 
-    const abilitiesLineElement = createContainer([h1Abilities, ulAbilitiesContainer]);
+    const abilitiesLineElement = createContainer([
+      h1Abilities,
+      ulAbilitiesContainer,
+    ]);
 
     // ----------
 
     const tags = createContainer([ul, span], ['pokemon-tags-row']);
-    const attributes = createContainer([heightLineElement, weightLineElement, abilitiesLineElement], ['pokemon-attributes-container']);
+    const chart = this.#createPokemonChart(pokemon);
+    const attributes = createContainer(
+      [heightLineElement, weightLineElement, abilitiesLineElement],
+      ['pokemon-attributes-container']
+    );
 
-    return createContainer([tags, attributes], ['pokemon-stats-container', 'box-shadow']);
+    return createContainer(
+      [tags, chart, attributes],
+      ['pokemon-stats-container', 'box-shadow']
+    );
+  }
+
+  static #createPokemonChart({ stats }) {
+    const chartLabels = [];
+    const chartBars = [];
+
+    let maxStat = 0;
+
+    stats.forEach((stat) => {
+      if (stat.base_stat > maxStat) {
+        maxStat = stat.base_stat;
+      }
+    });
+
+    stats.forEach((stat) => {
+      const item = createContainer([], ['label-item']);
+      item.textContent = ucfirst(stat.stat.name);
+
+      const bar = createContainer([], ['bar-item']);
+      bar.textContent = stat.base_stat;
+      bar.style.height = `${getPercentageBaseOnAMaxValue(
+        maxStat,
+        stat.base_stat
+      )}%`;
+
+      chartLabels.push(item);
+      chartBars.push(bar);
+    });
+
+    const chartLabelsCotainer = createContainer(chartLabels, [
+      'labels-container',
+    ]);
+    const chartBarsCotainer = createContainer(chartBars, ['bars-container']);
+
+    return createContainer(
+      [chartLabelsCotainer, chartBarsCotainer],
+      ['charts-container']
+    );
   }
 
   static #createPokeTypeTag({ type }) {
