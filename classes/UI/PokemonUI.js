@@ -1,5 +1,5 @@
 class PokemonUI {
-  static createPokemonListElement({ name, url }) {
+  static createPokemonsListElement({ name, url }) {
     const li = document.createElement('li');
     li.textContent = ucfirst(name);
     li.dataset.url = url;
@@ -7,20 +7,21 @@ class PokemonUI {
     return li;
   }
 
-  static createPokemonCardElemnt(pokemonInfo) {
+  static createPokemonCardElemnt(pokemon) {
+    console.log(pokemon);
     const img = document.createElement('img');
-    img.src = pokemonInfo.sprites.front_default;
+    img.src = pokemon.sprites.front_default;
 
     const h1 = document.createElement('h1');
     h1.classList.add('poke-name');
-    h1.textContent = ucfirst(pokemonInfo.name);
+    h1.textContent = ucfirst(pokemon.name);
 
     const ul = document.createElement('ul');
     ul.classList.add('poke-types-list-container');
 
     const pokemonTypeTags = [];
 
-    pokemonInfo.types.forEach((typeObj) => {
+    pokemon.types.forEach((typeObj) => {
       pokemonTypeTags.push(this.#createPokeTypeTag(typeObj));
     });
 

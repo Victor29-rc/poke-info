@@ -12,7 +12,9 @@
     <script src="utils/ui_helper.js" defer></script>
     <script src="utils/str_helper.js" defer></script>
     <script src="utils/math_helper.js" defer></script>
+    <script src="classes/Data/Pokemon.js" defer></script>
     <script src="classes/UI/PokemonUI.js" defer></script>
+    <script src="classes/App.js" defer></script>
     <script src="app.js" defer></script>
   </head>
   <body>
@@ -26,7 +28,7 @@
       </div>
     </header>
     <main>
-      <section class="section-pokemons" hidden>
+      <section class="section-pokemons">
         <div class="search-sub-section">
           <div class="search-container">
             <i class="fa-solid fa-magnifying-glass"></i>
@@ -41,7 +43,7 @@
         </div>
         <div class="pokemons-sub-section"></div>
       </section>
-      <section class="section-pokemon-preview"></section>
+      <section class="section-pokemon-preview" hidden></section>
     </main>
   </body>
 </html>
