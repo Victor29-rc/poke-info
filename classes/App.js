@@ -1,164 +1,215 @@
 class App {
-    static async init() {
+  static async init() {
+    const pokemonTypes = await Pokemon.getPokemonTypesList();
+    const pokemonsList = await Pokemon.getPokemonsList();
 
-        const pokemonTypes = await Pokemon.getPokemonTypesList();
-        const pokemonsList = await Pokemon.getPokemonsList();
+    /*Showing the pokemons list by default */
 
+    const pokemonTypesList = pokemonTypes.results.map((pokemon) => {
+      return PokemonUI.createPokemonsListElement(pokemon);
+    });
 
-        // const pokemonToShow = {
-        // abilities: [
-        //     {
-        //     ability: {
-        //         name: 'static',
-        //         url: 'https://pokeapi.co/api/v2/ability/9/',
-        //     },
-        //     is_hidden: false,
-        //     slot: 1,
-        //     },
-        //     {
-        //     ability: {
-        //         name: 'lightning-rod',
-        //         url: 'https://pokeapi.co/api/v2/ability/31/',
-        //     },
-        //     is_hidden: true,
-        //     slot: 3,
-        //     },
-        // ],
-        // base_experience: 112,
-        // cries: {},
-        // forms: [
-        //     {
-        //     name: 'pikachu',
-        //     url: 'https://pokeapi.co/api/v2/pokemon-form/25/',
-        //     },
-        // ],
-        // game_indices: [],
-        // height: 4,
-        // held_items: [],
-        // id: 25,
-        // is_default: true,
-        // location_area_encounters: 'https://pokeapi.co/api/v2/pokemon/25/encounters',
-        // moves: [],
-        // name: 'pikachu',
-        // order: 35,
-        // past_abilities: [],
-        // past_types: [],
-        // species: {},
-        // sprites: {
-        //     back_default:
-        //     'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/25.png',
-        //     back_female:
-        //     'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/female/25.png',
-        //     back_shiny:
-        //     'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/25.png',
-        //     back_shiny_female:
-        //     'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/female/25.png',
-        //     front_default:
-        //     'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png',
-        //     front_female:
-        //     'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/female/25.png',
-        //     front_shiny:
-        //     'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/25.png',
-        //     front_shiny_female:
-        //     'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/female/25.png',
-        //     other: {},
-        //     versions: {},
-        // },
-        // stats: [
-        //     {
-        //     base_stat: 35,
-        //     effort: 0,
-        //     stat: {
-        //         name: 'hp',
-        //         url: 'https://pokeapi.co/api/v2/stat/1/',
-        //     },
-        //     },
-        //     {
-        //     base_stat: 55,
-        //     effort: 0,
-        //     stat: {
-        //         name: 'attack',
-        //         url: 'https://pokeapi.co/api/v2/stat/2/',
-        //     },
-        //     },
-        //     {
-        //     base_stat: 40,
-        //     effort: 0,
-        //     stat: {
-        //         name: 'defense',
-        //         url: 'https://pokeapi.co/api/v2/stat/3/',
-        //     },
-        //     },
-        //     {
-        //     base_stat: 50,
-        //     effort: 0,
-        //     stat: {
-        //         name: 'special-attack',
-        //         url: 'https://pokeapi.co/api/v2/stat/4/',
-        //     },
-        //     },
-        //     {
-        //     base_stat: 50,
-        //     effort: 0,
-        //     stat: {
-        //         name: 'special-defense',
-        //         url: 'https://pokeapi.co/api/v2/stat/5/',
-        //     },
-        //     },
-        //     {
-        //     base_stat: 90,
-        //     effort: 2,
-        //     stat: {
-        //         name: 'speed',
-        //         url: 'https://pokeapi.co/api/v2/stat/6/',
-        //     },
-        //     },
-        // ],
-        // types: [
-        //     {
-        //     slot: 1,
-        //     type: {
-        //         name: 'electric',
-        //         url: 'https://pokeapi.co/api/v2/type/13/',
-        //     },
-        //     },
-        // ],
-        // weight: 60,
-        // };
+    const pokemonTypesElement = document.querySelector('.pokemon-types');
 
-        /*Showing the pokemons list  */
+    pokemonTypesElement.append(...pokemonTypesList);
+    this.mountPokemonList(pokemonsList);
+  }
 
+  static mountPokemonList(pokemonsList) {
+    const { previous, next } = pokemonsList;
 
-        const pokemonTypesList = pokemonTypes.results.map((pokemon) => {
-            return PokemonUI.createPokemonsListElement(pokemon);
-        });
-        
-        console.log(pokemonsList.results);
+    const pokemonsCardsContainerElement = document.querySelector(
+      'section.section-pokemons div.pokemons-sub-section'
+    );
 
-        const pokemonCardsList = pokemonsList.results.map((pokemon) => {
-            return PokemonUI.createPokemonCardElemnt(pokemon);
-        })
-        
-        const pokemonTypesElement = document.querySelector('.pokemon-types');
-        const pokemonsCardsContainerElement = document.querySelector(
-        'section.section-pokemons div.pokemons-sub-section'
-        );
-        
-        pokemonTypesElement.append(...pokemonTypesList);
-        pokemonsCardsContainerElement.append(...pokemonCardsList);
+    const pokemonCardsList = pokemonsList.results.map((pokemon) => {
+      return PokemonUI.createPokemonCardElemnt(pokemon);
+    });
 
-        /*Showing the pokemons list  */
+    pokemonsCardsContainerElement.innerHTML = '';
+    pokemonsCardsContainerElement.append(...pokemonCardsList);
 
-        /* Showin a single pokemon */
+    const previousNextSectionElement = document.querySelector(
+      '.previous-next-section'
+    );
 
-        // const showPokemonSectionElement = document.querySelector(
-        // 'section.section-pokemon-preview'
-        // );
+    previousNextSectionElement.innerHTML = '';
 
-        // const rowShowPokemon = PokemonUI.showPokemon(pokemonToShow);
-        // const rowPokemonEvolutions = document.createElement('div');
-        // rowPokemonEvolutions.classList.add('row-pokemon-evolution');
+    const previousSpan = document.createElement('span');
+    previousSpan.textContent = 'Previous';
 
-        // showPokemonSectionElement.append(rowShowPokemon, rowPokemonEvolutions);
+    const previousContainer = createContainer([previousSpan], ['previous']);
+
+    if (previous) {
+      previousContainer.dataset.url = previous;
+      previousContainer.addEventListener(
+        'click',
+        this.#nextPreviousPageHandler.bind(previousContainer, this)
+      );
+    } else {
+      previousContainer.classList.add('invalid');
     }
+
+    const nextSpan = document.createElement('span');
+    nextSpan.textContent = 'Next';
+
+    const nextContainer = createContainer([nextSpan], ['next']);
+
+    if (next) {
+      nextContainer.dataset.url = next;
+      nextContainer.addEventListener(
+        'click',
+        this.#nextPreviousPageHandler.bind(nextContainer, this)
+      );
+    } else {
+      nextContainer.classList.add('invalid');
+    }
+
+    previousNextSectionElement.append(previousContainer);
+    previousNextSectionElement.append(nextContainer);
+  }
+
+  static async setListeners() {
+    //Elements
+    const gobackElement = document.querySelector('.go-back-container');
+    const pokemonListContainer = document.querySelector('.section-pokemons');
+    const navElement = document.querySelector('nav');
+    const menuIconElement = document.querySelector('.poke-header i');
+    const searchElement = document.getElementById('search');
+
+    const pokemonPreviewContainer = document.querySelector(
+      '.section-pokemon-preview'
+    );
+
+    //Handler functions
+
+    const showPokemonHandler = (e) => {
+      // if the user is clicking on the poke-card-container element or in one of its child
+      if (
+        e.target.classList.contains('poke-card-container') ||
+        e.target.parentElement.classList.contains('poke-card-container')
+      ) {
+        const pokeCardContainerElement = e.target.classList.contains(
+          'poke-card-container'
+        )
+          ? e.target
+          : e.target.parentElement;
+
+        const pokemon = JSON.parse(pokeCardContainerElement.dataset.pokemon);
+
+        pokemonPreviewContainer.append(PokemonUI.showPokemon(pokemon));
+
+        pokemonListContainer.setAttribute('hidden', 'hidden');
+        pokemonPreviewContainer.removeAttribute('hidden');
+      }
+    };
+
+    const goBackHandler = () => {
+      pokemonListContainer.removeAttribute('hidden');
+      pokemonPreviewContainer.setAttribute('hidden', 'hidden');
+
+      const pokemonRowContainerElement = document.querySelector(
+        '.section-pokemon-preview .row-pokemon'
+      );
+
+      if (pokemonRowContainerElement) {
+        pokemonRowContainerElement.remove();
+      }
+    };
+
+    const searchElementHandler = (e) => {
+      const searchedValue = e.target.value;
+
+      const pokeCards = document.querySelectorAll(
+        '.pokemons-sub-section .poke-card-container'
+      );
+
+      pokeCards.forEach((pokeCardElement) => {
+        const { name } = JSON.parse(pokeCardElement.dataset.pokemon);
+
+        if (!name.toLowerCase().includes(searchedValue.trim().toLowerCase())) {
+          pokeCardElement.setAttribute('hidden', 'hidden');
+        } else {
+          pokeCardElement.removeAttribute('hidden');
+        }
+      });
+    };
+
+    const displayPokemonByTypesHandler = async (e) => {
+      const pokeListContainer = document.createElement('ul');
+      pokeListContainer.classList.add('poke-list-by-type');
+
+      if (
+        e.target.tagName === 'LI' &&
+        e.target.parentElement.classList.contains('pokemon-types')
+      ) {
+        const url = e.target.dataset.url;
+        const pokemons = await Pokemon.getPokemonListByType(url);
+
+        const pokemonsLi = pokemons.map(({ pokemon }) => {
+          const li = document.createElement('li');
+          li.textContent = ucfirst(pokemon.name);
+
+          return li;
+        });
+
+        pokeListContainer.append(...pokemonsLi);
+        e.target.append(pokeListContainer);
+
+        pokeListContainer.addEventListener('click', async (e) => {
+          if (
+            e.target.tagName === 'LI' &&
+            e.target.parentElement.classList.contains('poke-list-by-type')
+          ) {
+            const pokemonName = e.target.textContent.toLowerCase();
+            const pokemon = await Pokemon.getPokemonByName(pokemonName);
+
+            const pokemonListContainer =
+              document.querySelector('.section-pokemons');
+
+            const pokemonPreviewContainer = document.querySelector(
+              '.section-pokemon-preview'
+            );
+
+            if (pokemonPreviewContainer.querySelector('.row-pokemon')) {
+              pokemonPreviewContainer.querySelector('.row-pokemon').remove();
+            }
+
+            pokemonPreviewContainer.append(PokemonUI.showPokemon(pokemon));
+
+            pokemonListContainer.setAttribute('hidden', 'hidden');
+            pokemonPreviewContainer.removeAttribute('hidden');
+
+            const nav = document.querySelector('nav');
+            if (nav && nav.classList.contains('active')) {
+              nav.classList.remove('active');
+            }
+          }
+        });
+      }
+    };
+
+    //Listeners
+    document.addEventListener('click', () => {
+      const pokeListByType = document.querySelector('.poke-list-by-type');
+      if (pokeListByType) {
+        pokeListByType.remove();
+      }
+    });
+    menuIconElement.addEventListener('click', () => {
+      navElement.classList.toggle('active');
+    });
+    searchElement.addEventListener('keyup', searchElementHandler);
+    pokemonListContainer.addEventListener('click', showPokemonHandler);
+    gobackElement.addEventListener('click', goBackHandler);
+    navElement.addEventListener('click', displayPokemonByTypesHandler);
+  }
+
+  static async #nextPreviousPageHandler(thisClass) {
+    const url = this.dataset.url;
+
+    const pokemonsList = await Pokemon.getPokemonsList(url);
+
+    thisClass.mountPokemonList(pokemonsList);
+  }
 }

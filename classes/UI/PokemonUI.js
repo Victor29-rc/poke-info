@@ -3,12 +3,12 @@ class PokemonUI {
     const li = document.createElement('li');
     li.textContent = ucfirst(name);
     li.dataset.url = url;
+    li.classList.add(`type-${name}`);
 
     return li;
   }
 
   static createPokemonCardElemnt(pokemon) {
-    console.log(pokemon);
     const img = document.createElement('img');
     img.src = pokemon.sprites.front_default;
 
@@ -27,7 +27,22 @@ class PokemonUI {
 
     ul.append(...pokemonTypeTags);
 
-    return createContainer([img, h1, ul], ['poke-card-container']);
+    const pokemonCard = createContainer([img, h1, ul], ['poke-card-container']);
+
+    const pokemonInfo = {
+      name: pokemon.name,
+      abilities: pokemon.abilities,
+      types: pokemon.types,
+      sprites: pokemon.sprites,
+      stats: pokemon.stats,
+      base_experience: pokemon.base_experience,
+      height: pokemon.height,
+      weight: pokemon.weight,
+    };
+
+    pokemonCard.dataset.pokemon = JSON.stringify(pokemonInfo);
+
+    return pokemonCard;
   }
 
   static showPokemon(pokemon) {
@@ -35,14 +50,14 @@ class PokemonUI {
       [
         this.#createPokemonPreview(pokemon),
         this.#createPokemonDescription({
-          name: 'Pokemon name',
-          description: 'Pokemon description example',
+          name: ucfirst(pokemon.name),
+          // description: 'Pokemon description example',
         }),
       ],
       ['pokemon-preview-container']
     );
 
-    const columnPokemonStats = this.createPokemonStats(pokemon);
+    const columnPokemonStats = this.#createPokemonStats(pokemon);
 
     const rowShowPokemon = createContainer(
       [columnPokemonPreview, columnPokemonStats],
@@ -52,27 +67,7 @@ class PokemonUI {
     return rowShowPokemon;
   }
 
-  static #createPokemonPreview(pokemon) {
-    const img = document.createElement('img');
-    img.src = pokemon.sprites.front_default;
-
-    return createContainer(
-      [img],
-      ['pokemon-preview', 'show-info-container', 'box-shadow']
-    );
-  }
-
-  static #createPokemonDescription(pokemon) {
-    const h1 = document.createElement('h1');
-    h1.textContent = pokemon.name;
-
-    const p = document.createElement('p');
-    p.textContent = pokemon.description;
-
-    return createContainer([h1, p], ['pokemon-description', 'box-shadow']);
-  }
-
-  static createPokemonStats(pokemon) {
+  static #createPokemonStats(pokemon) {
     const ul = document.createElement('ul');
     const pokemonTags = [];
 
@@ -144,6 +139,26 @@ class PokemonUI {
       [tags, chart, attributes],
       ['pokemon-stats-container', 'box-shadow']
     );
+  }
+
+  static #createPokemonPreview(pokemon) {
+    const img = document.createElement('img');
+    img.src = pokemon.sprites.front_default;
+
+    return createContainer(
+      [img],
+      ['pokemon-preview', 'show-info-container', 'box-shadow']
+    );
+  }
+
+  static #createPokemonDescription(pokemon) {
+    const h1 = document.createElement('h1');
+    h1.textContent = pokemon.name;
+
+    // const p = document.createElement('p');
+    // p.textContent = pokemon.description;
+
+    return createContainer([h1], ['pokemon-description', 'box-shadow']);
   }
 
   static #createPokemonChart({ stats }) {

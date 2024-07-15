@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Poke Info</title>
+    <title>Poke-Info</title>
     <script
       src="https://kit.fontawesome.com/04fc921eac.js"
       crossorigin="anonymous"
@@ -20,7 +20,7 @@
   <body>
     <header>
       <div class="poke-header">
-        <h1>Poke info</h1>
+        <h1>Poke-Info</h1>
         <i class="fa-solid fa-bars display-menu-btn"></i>
         <nav>
           <ul class="pokemon-types"></ul>
@@ -29,6 +29,7 @@
     </header>
     <main>
       <section class="section-pokemons">
+        <div class="previous-next-section"></div>
         <div class="search-sub-section">
           <div class="search-container">
             <i class="fa-solid fa-magnifying-glass"></i>
@@ -43,7 +44,13 @@
         </div>
         <div class="pokemons-sub-section"></div>
       </section>
-      <section class="section-pokemon-preview" hidden></section>
+      <section class="section-pokemon-preview" hidden>
+        <div class="go-back-container">
+          <div class="go-back">
+            <span> Go back</span> <i class="fa-solid fa-arrow-left"></i>
+          </div>
+        </div>
+      </section>
     </main>
   </body>
 </html>

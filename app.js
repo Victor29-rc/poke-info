@@ -1,1 +1,3 @@
-App.init();
+App.init().then(() => {
+  App.setListeners();
+});
